@@ -10,7 +10,7 @@ For now:
 
 - you need python3 for this to work 
 - git clone the repo
-- cd into it and do `pip3 install`
+- cd into it and do `pip3 install -r requirements.txt`
 - run either `api_test_get.py` or `api_test_post.py` depending on how you have implemented your endpoint
 - To run : `python3 api_test_get.py`
 
