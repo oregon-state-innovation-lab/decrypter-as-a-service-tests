@@ -13,9 +13,15 @@ class TestCases:
         """
         if numTests < 3:
             numTests = 3
-
+            
+        self.statistics = {"total":0, "1char":0, "2char":0, "3char":0, "sha1":0, "sha256": 0}
         self.tests = self.get_random_test_cases(numTests)
-
+        print(f'Generated {self.statistics["total"]} tests. \n\
+            {self.statistics["1char"]} 1-character passwords. \n\
+            {self.statistics["2char"]} 2-character passwords. \n\
+            {self.statistics["3char"]} 3-character passwords. \n\
+            {self.statistics["sha1"]} are sha1 hashes. \n\
+            {self.statistics["sha256"]} are sha256 hashes.')
         
 
     def get_random_test_cases(self, numTests):
@@ -41,9 +47,12 @@ class TestCases:
             n = choices([1,2,3], weights=(1, 2, 3),k=1)[0] if not guaranteedStringLength else guaranteedStringLength.pop()
 
             randomString = ''.join(choices(allowed_characters, k=n))
-            randomStringHashed = self.random_hash_algorithm(randomString.encode('utf-8'))
+            randomStringHashed, algtype = self.random_hash_algorithm(randomString.encode('utf-8'))
             if randomStringHashed not in tests.keys():
                 tests[randomStringHashed] = randomString
+                self.statistics["total"] +=1
+                self.statistics[str(n)+"char"] += 1
+                self.statistics["sha"+str(algtype)] += 1
             else:
                 numTests += 1
 
@@ -56,7 +65,8 @@ class TestCases:
             x (string): plaintext password
 
         Returns:
-            string, the hash
+            [hash digest of x (string), algorithm identifer (int)]
         """
-        algorithm = choice([1,2])
-        return sha1(x).hexdigest() if algorithm == 1 else sha256(x).hexdigest()
+        algorithm = choice([1,256])
+        
+        return [sha1(x).hexdigest() if algorithm == 1 else sha256(x).hexdigest(), algorithm]
