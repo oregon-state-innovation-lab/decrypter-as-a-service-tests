@@ -1,8 +1,7 @@
 import requests
 import json
 
-endpoint = "<paste_your_endpoint_here>"
-
+endpoint = input("Enter your endpoint, make sure not to add paramter: ")
 
 def test_three_letter_decrypt_sha1():
     # Given
