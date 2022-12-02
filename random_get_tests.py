@@ -37,7 +37,6 @@ def random_happy_path_tests(numberOfTests):
                 print(f'Failed test {testNum+1} due to response text. Expected {{"{sha_hash}": "{password}"}}')
                 print(f"Got: {response.text}")
                 print("...")
-                print(json.loads(response.text).get(sha_hash))
             
     return numTestsPassed
 
